@@ -3,6 +3,7 @@ manoy = 0;
 confianza = 0;
 lineaIzquierda = 0;
 lineaDerecha = 0;
+lineaArriba = 0;
 function setup() {
     canvas = createCanvas(screen.width - 10, screen.height - 170);
     background("rgb(15, 15, 131)");
@@ -17,6 +18,8 @@ function setup() {
     pose.on("pose", recibirRespuesta);
     lineaIzquierda = ((screen.width - 10) / 2) - 150;
     lineaDerecha = ((screen.width - 10) / 2) + 150
+    lineaArriba = ((screen.height - 170) / 2) - 100;
+    lineaAbajo = ((screen.height - 170) / 2) + 100;
 }
 
 function listo() {
@@ -36,19 +39,24 @@ function preload() {
 }
 function draw() {
     background("rgb(15, 15, 131)");
+    // La configuración default es con la cámara invertida
+    /*
     stroke("lime")
-    //line(lineaIzquierda, 0, lineaIzquierda, screen.height - 170)
+    line( 0, lineaArriba, screen.width - 10,lineaArriba)
+    line(lineaIzquierda, 0, lineaIzquierda, screen.height - 170)
     stroke("red")
-    //line(lineaDerecha, 0, lineaDerecha, screen.height - 170)
-    if (keyDown("D") || keyDown(RIGHT_ARROW) || ( manox < lineaIzquierda)) {
+    line( 0, lineaAbajo, screen.width - 10,lineaAbajo)
+    line(lineaDerecha, 0, lineaDerecha, screen.height - 170)
+    */
+    if (keyDown("D") || keyDown(RIGHT_ARROW) || (confianza > 0.15 && manox < lineaIzquierda)) {
         purpleman.velocityX = 5;
         purpleman.mirrorX(1)
-    } else if (keyDown("A") || keyDown(LEFT_ARROW) || (manox > lineaDerecha)) {
+    } else if (keyDown("A") || keyDown(LEFT_ARROW) || (confianza > 0.15 && manox > lineaDerecha)) {
         purpleman.velocityX = -5;
         purpleman.mirrorX(-1)
-    } else if (keyDown("W") || keyDown(UP_ARROW)) {
+    } else if (keyDown("W") || keyDown(UP_ARROW) || (confianza > 0.15 &&manoy > lineaArriba)) {
         purpleman.velocityY = -5;
-    } else if (keyDown("S") || keyDown(DOWN_ARROW)) {
+    } else if (keyDown("S") || keyDown(DOWN_ARROW)|| (confianza > 0.15 &&manoy > lineaAbajo)) {
         purpleman.velocityY = 5;
     } else {
         purpleman.velocityX = 0;
